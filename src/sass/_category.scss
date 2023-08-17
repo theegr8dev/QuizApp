@@ -1,0 +1,42 @@
+.category {
+	&-container {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 2rem;
+	}
+
+	&__box {
+		font-size: 2rem;
+		padding: 3rem 1.5rem;
+		border-radius: 15px;
+		box-shadow: 0px 0px 10px -1px rgba(0, 0, 0, 0.1);
+
+		&--icon {
+			background-color: rgba(0, 0, 0, 0.4);
+			padding: 1rem;
+			border-radius: 50%;
+			display: inline-block;
+
+
+			&-container {
+				display: block;
+				width: 5rem;
+				height: 5rem;
+				fill: $white;
+			}
+		}
+
+		&--text {
+			padding-block: 2rem 1rem;
+		}
+
+		&--btn {
+			display: inline-block;
+			background-color: $primary-color;
+			color: $white;
+			width: 100%;
+			padding: 1rem;
+			border-radius: 10px;
+		}
+	}
+}

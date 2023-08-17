@@ -1,0 +1,66 @@
+%flex {
+	display: flex;
+}
+
+%flex-column {
+	@extend %flex;
+	flex-direction: column;
+}
+
+.quiz {
+	padding-inline: 1rem;
+
+	&__question-number {
+		font-size: 1.5rem;
+
+		span {
+			font-weight: bold;
+		}
+	}
+
+	&-container {
+		@extend %flex-column;
+		gap: 2rem;
+		padding-block-start: .5rem;
+	}
+
+	&--question {
+		font-size: 2rem;
+		font-weight: bold;
+	}
+
+	&__options {
+		@extend %flex-column;
+		gap: 2rem;
+		border: 1.5px solid grey;
+		padding: 1rem 1.2rem;
+	}
+
+	&__option {
+		@extend %flex;
+		align-items: baseline;
+		gap: .5rem;
+
+		&--input {
+			cursor: pointer;
+		}
+
+		&--label {
+			font-size: 1.6rem;
+			cursor: pointer;
+		}
+	}
+
+	&__btns {
+		@extend %flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	&__btn {
+		border-radius: 10px;
+		font-size: 1.5rem;
+		padding: 1rem 2rem;
+	}
+
+}
