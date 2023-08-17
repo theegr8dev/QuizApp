@@ -578,17 +578,47 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _model = require("./model");
 var _categoryView = require("./views/CategoryView");
 var _categoryViewDefault = parcelHelpers.interopDefault(_categoryView);
-_model.LoadQuestion();
+var _questionView = require("./views/questionView");
+var _questionViewDefault = parcelHelpers.interopDefault(_questionView);
+const Category = async function() {
+    const id = window.location.hash.slice(1);
+    if (!id) return;
+    console.log(id);
+    // Get Question
+    await _model.LoadQuestion(id);
+    (0, _categoryViewDefault.default)._hideParent();
+    (0, _questionViewDefault.default)._render(_model.state);
+};
+const init = function() {
+    (0, _categoryViewDefault.default)._getHash(Category);
+};
+init();
 
-},{"./model":"Y4A21","./views/CategoryView":"jN3GS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"Y4A21":[function(require,module,exports) {
+},{"./model":"Y4A21","./views/CategoryView":"jN3GS","./views/questionView":"gVKtq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"Y4A21":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "state", ()=>state);
 parcelHelpers.export(exports, "LoadQuestion", ()=>LoadQuestion);
+const state = {
+    category: "",
+    result: []
+};
 const LoadQuestion = async function(id) {
     try {
         const response = await fetch(`https://quizapi.io/api/v1/questions?apiKey=bErbc7AKqsgtGFy33sLbpyCHVy9u7iB3GjZwDW5a&category=${id}&limit=5`);
         const result = await response.json();
-        console.log(result);
+        state.category = id;
+        result.forEach((res, i)=>{
+            state.result.push({
+                id: res.id,
+                questionIndex: i + 1,
+                question: res.question,
+                answers: res.answers,
+                correctAnswer: res.correct_answer,
+                correctAnswers: res.correct_answers
+            });
+        });
+        console.log(state);
     } catch (error) {
         console.error(error);
     }
@@ -627,13 +657,103 @@ exports.export = function(dest, destName, get) {
 },{}],"jN3GS":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-class Category {
-    _parentEl = document.querySelector("category");
+class CategoryView {
+    _parentEl = document.querySelector(".category");
     _getHash(handler) {
         window.addEventListener("hashchange", handler);
     }
+    _hideParent() {
+        this._parentEl.classList.add("hidden");
+    }
 }
-exports.default = new Category();
+exports.default = new CategoryView();
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gVKtq":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+class QuestionView {
+    _parentEl = document.querySelector(".quiz");
+    _render(state) {
+        this._showParent(state.category);
+        this._displayNumber(state.result);
+        this._displayQuestion(state.result);
+    }
+    _showParent(id) {
+        this._parentEl.classList.remove("hidden");
+        let markup = `
+			<h1><span class="quiz--category">${id.toUpperCase()}</span> Quiz</h1>
+			<ul class="quiz__number">
+
+			</ul>
+
+			<article class="quiz-container">
+				<p class="quiz__question-number">Question <span class="quiz__question-number--of">10</span></p>
+				<div class="quiz__questions-container">
+
+				</div>
+				<div class="quiz__btns">
+					<button class="btn quiz__btn quiz__btn--back">Previous Question</button>
+					<button class="btn quiz__btn quiz__btn--next">Next Question</button>
+				</div>
+			</article>
+			<button class="btn quiz__btn quiz__btn--submit">Submit Answers</button> -->
+			`;
+        this._parentEl.insertAdjacentHTML("afterbegin", markup);
+    }
+    _displayNumber(result) {
+        let quizNumberContainer = document.querySelector(".quiz__number");
+        result.forEach((res)=>{
+            console.log(res);
+            let markup = `
+					<li class="quiz__number-container quiz__number-active ">
+					<p>QUESTION </p>
+					<P class="quiz__number--text">${res.questionIndex}</P>
+				</li>	`;
+            quizNumberContainer.insertAdjacentHTML("beforeend", markup);
+        });
+    }
+    _displayQuestion(result) {
+        let questionContainer = document.querySelector(".quiz__questions-container");
+        result.forEach((res)=>{
+            let markup = `
+					<div class="quiz__question-container">
+					<span>Correct Answer 1/4</span>
+					<p class="quiz--question"> ${res.question} </p>
+					<form class="quiz__options">
+					</form>
+					</div>
+					`;
+            questionContainer.insertAdjacentHTML("afterbegin", markup);
+            const optionConatiner = document.querySelector(".quiz__options");
+            for (let [key, value] of Object.entries(res.answers)){
+                let html3 = `
+							<div class="quiz__option ">
+								<input class="quiz__option--input " type="checkbox" id="${key}-${res.id}" name="${key}">
+								<label class="quiz__option--label" for="${key}-${res.id}">${value ?? ""}
+								</label>
+							</div>
+					`;
+                if (value) optionConatiner.insertAdjacentHTML("beforeend", html3);
+            }
+        });
+    }
+    _displayOption(result) {
+        const optionConatiner = document.querySelector(".quiz__options");
+        result.forEach((res)=>{
+            for (let [key, value] of Object.entries(res.answers)){
+                let html3 = `
+							<div class="quiz__option ">
+								<input class="quiz__option--input " type="checkbox" id="${key}-${res.id}" name="${key}">
+								<label class="quiz__option--label" for="${key}-${res.id}">${value ?? ""}
+								</label>
+							</div>
+					`;
+                if (value) optionConatiner.insertAdjacentHTML("beforeend", html3);
+            }
+        });
+    }
+}
+exports.default = new QuestionView();
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["aD7Zm","aenu9"], "aenu9", "parcelRequire3324")
 

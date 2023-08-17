@@ -121,11 +121,11 @@ h1 {
   display: inline-block;
 }
 
-.result__btns, .quiz__btns, .quiz__option, .quiz__number, .quiz__options, .quiz-container {
+.result__btns, .quiz__btns, .quiz__option, .quiz__number, .quiz__options, .quiz__questions-container, .quiz-container {
   display: flex;
 }
 
-.quiz__options, .quiz-container {
+.quiz__options, .quiz__questions-container, .quiz-container {
   flex-direction: column;
 }
 
@@ -141,7 +141,7 @@ h1 {
 .quiz__number {
   border: 1px solid red;
   flex-wrap: wrap;
-  gap: 4rem;
+  gap: 3.8rem;
   width: 100%;
   margin-block: 10rem 5rem;
 }
@@ -186,8 +186,21 @@ h1 {
 }
 
 .quiz-container {
-  gap: 2rem;
+  gap: 1rem;
   padding-block-start: .5rem;
+}
+
+.quiz__questions-container {
+  border: 1px solid red;
+  gap: 2rem;
+  padding-block: 1rem;
+}
+
+.quiz__questions-container span {
+  text-align: right;
+  color: #218380;
+  font-size: 1.6rem;
+  display: block;
 }
 
 .quiz--question {
@@ -198,7 +211,6 @@ h1 {
 .quiz__options {
   border-bottom: 1px solid #b690901a;
   gap: 2rem;
-  padding-block-end: 5rem;
 }
 
 .quiz__option {
@@ -244,7 +256,7 @@ h1 {
   justify-content: flex-end;
   align-items: center;
   gap: 2rem;
-  padding-block: 5rem;
+  padding-block: 3rem;
 }
 
 .quiz__btn {
