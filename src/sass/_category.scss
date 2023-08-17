@@ -17,12 +17,11 @@
 			border-radius: 50%;
 			display: inline-block;
 
-
 			&-container {
 				display: block;
 				width: 5rem;
 				height: 5rem;
-				fill: $white;
+				fill: $primary-color !important;
 			}
 		}
 

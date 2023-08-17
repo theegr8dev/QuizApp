@@ -9,12 +9,59 @@
 
 .quiz {
 	padding-inline: 1rem;
+	padding-block-end: 10rem;
+
+	h1 {
+		text-align: center
+	}
+
+	&__number {
+		@extend %flex;
+		flex-wrap: wrap;
+		gap: 4rem;
+		width: 100%;
+		border: 1px solid red;
+		margin-block: 10rem 5rem;
+
+		&-container {
+			color: $black;
+			text-align: center;
+			font-size: 1.7rem;
+			padding: 1rem 1.5rem;
+			cursor: pointer;
+
+			p {}
+		}
+
+		&-active {
+			color: $white !important;
+			background-color: $primary-color;
+		}
+	}
 
 	&__question-number {
-		font-size: 1.5rem;
+		font-size: 1.8rem;
+		text-align: center;
+		position: relative;
 
-		span {
-			font-weight: bold;
+		&::before {
+			content: '';
+			background-color: hsla(0, 21%, 64%, 0.1);
+			width: 43%;
+			height: .2rem;
+			position: absolute;
+			left: 0;
+			top: 50%
+		}
+
+		&::after {
+			content: '';
+			background-color: hsla(0, 21%, 64%, 0.1);
+			width: 43%;
+			height: .2rem;
+			position: absolute;
+			right: 0;
+			top: 50%
 		}
 	}
 
@@ -25,15 +72,15 @@
 	}
 
 	&--question {
-		font-size: 2rem;
-		font-weight: bold;
+		font-size: 3rem;
+		font-weight: 500;
 	}
 
 	&__options {
 		@extend %flex-column;
 		gap: 2rem;
-		border: 1.5px solid grey;
-		padding: 1rem 1.2rem;
+		padding-block-end: 5rem;
+		border-bottom: 1px solid rgba(182, 144, 144, 0.102);
 	}
 
 	&__option {
@@ -42,11 +89,36 @@
 		gap: .5rem;
 
 		&--input {
-			cursor: pointer;
+			appearance: none;
+			background-color: #fff;
+			margin: 0;
+			font: inherit;
+			color: currentColor;
+			width: 2rem;
+			height: 2rem;
+			border: 1px solid #adb5bd;
+			transform: translateY(-0.075em);
+			display: grid;
+			place-content: center;
+
+			&::before {
+				content: "";
+				width: 1.5rem;
+				height: 1.5rem;
+				transform: scale(0);
+				transition: 120ms transform ease-in-out;
+				box-shadow: inset 2rem 2rem $primary-color;
+				transform-origin: bottom left;
+				clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+			}
+
+			&:checked::before {
+				transform: scale(1);
+			}
 		}
 
 		&--label {
-			font-size: 1.6rem;
+			font-size: 1.8rem;
 			cursor: pointer;
 		}
 	}
@@ -54,13 +126,23 @@
 	&__btns {
 		@extend %flex;
 		align-items: center;
-		justify-content: space-between;
+		justify-content: flex-end;
+		gap: 2rem;
+		padding-block: 5rem;
 	}
 
 	&__btn {
-		border-radius: 10px;
-		font-size: 1.5rem;
-		padding: 1rem 2rem;
+		font-size: 1.7rem;
+		letter-spacing: .2em;
+
+		&--submit {
+			width: 100%;
+			border-color: green;
+
+			&:hover {
+				background-color: green;
+			}
+		}
 	}
 
 }

@@ -15,11 +15,15 @@ html {
 }
 
 body {
-	font-family: 'Poppins', sans-serif;
+	font-family: 'Open Sans', sans-serif;
 }
 
 a {
 	text-decoration: none;
+}
+
+li {
+	list-style: none;
 }
 
 main {
@@ -32,6 +36,10 @@ h1 {
 	padding-block: 1rem;
 }
 
+.hidden {
+	display: none;
+}
+
 .change-category {
 	display: block;
 	text-decoration: underline;
@@ -40,10 +48,17 @@ h1 {
 
 .btn {
 	background: transparent;
-	border: 1px solid transparent;
-	background: $primary-color;
-	color: $white;
+	border: 1px solid $primary-color;
+	border-radius: 20px;
+	color: $black;
+	padding: 1rem 2.5rem;
+	text-transform: uppercase;
 	cursor: pointer;
+
+	&:hover {
+		background-color: $primary-color;
+		color: $white;
+	}
 }
 
 .header {
