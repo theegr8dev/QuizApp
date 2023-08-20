@@ -16,6 +16,7 @@ html {
 
 body {
 	font-family: 'Open Sans', sans-serif;
+	height: 100%;
 }
 
 a {
@@ -29,6 +30,11 @@ li {
 main {
 	max-width: 90rem;
 	margin: 0 auto;
+	height: 100%;
+}
+
+main>* {
+	height: 100%;
 }
 
 h1 {
@@ -37,7 +43,8 @@ h1 {
 }
 
 .hidden {
-	display: none;
+	display: none !important;
+	// opacity: 0;
 }
 
 .change-category {
